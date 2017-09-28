@@ -13,6 +13,7 @@ from typeguard import check_argument_types
 from neuralmonkey.dataset import Dataset
 from neuralmonkey.decorators import tensor
 from neuralmonkey.attention.scaled_dot_product import MultiHeadAttention
+from neuralmonkey.logging import log
 from neuralmonkey.model.model_part import FeedDict, ModelPart
 from neuralmonkey.model.sequence import Sequence
 from neuralmonkey.model.stateful import (TemporalStateful,
@@ -68,6 +69,8 @@ class TransformerEncoder(ModelPart, TemporalStatefulWithOutput):
         self.train_mode = tf.placeholder(tf.bool, [], "train_mode")
         self.self_attentions = [None for _ in range(self.depth)] \
             # type: List[Optional[MultiHeadAttention]]
+
+        log("Output op: {}".format(self.output))
     # pylint: enable=too-many-arguments
 
     @tensor
